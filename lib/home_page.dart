@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 
@@ -21,7 +23,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.center,
+      // alignment: Alignment.center, // 가운데서 뿌려짐
+      alignment: Alignment.topCenter, // 하늘에서 뿌려짐
       children: [
         Scaffold(
           appBar: AppBar(title: const Text('Confetti Widget')),
@@ -29,23 +32,29 @@ class _HomePageState extends State<HomePage> {
             child: MaterialButton(
               onPressed: () {
                 if (isPlaying) {
-                  setState(() {
-                    _controller.stop();
-                  });
+                  _controller.stop();
+
                 } else {
-                  setState(() {
-                    _controller.play();
-                  });
+                  _controller.play();
+
                 }
                 isPlaying = !isPlaying;
               },
               child: Text('Party Time'),
-              color: Colors.deepPurple,
+              color: Colors.deepPurple[300],
             ),
           ),
         ),
         ConfettiWidget(
           confettiController: _controller,
+          // pi : left, 0: right, pi/2: below, -pi/2: up
+          blastDirection: pi/2,
+          colors: [
+            Colors.deepPurple, Colors.yellow, Colors.red,
+          ],
+          gravity: 0.01,
+          emissionFrequency: 0.1,
+
         ),
       ],
     );
